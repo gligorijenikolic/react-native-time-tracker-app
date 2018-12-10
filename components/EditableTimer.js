@@ -4,7 +4,7 @@ import Timer from './Timer';
 
 export default class EditableTimer extends React.Component {
     state = {
-        editFormOpen: false,
+        editFormOpen: false
     };
 
     render() {
@@ -12,7 +12,15 @@ export default class EditableTimer extends React.Component {
         const { editFormOpen } = this.state;
 
         if (editFormOpen) {
-            return <TimerForm id={id} title={title} project={project} />;
+            return (
+                <TimerForm
+                    id={id}
+                    title={title}
+                    project={project}
+                    onFormSubmit={this.handleSubmit}
+                    onFormClose={this.handleFormClose}
+                />
+            );
         }
         return (
             <Timer
@@ -21,6 +29,7 @@ export default class EditableTimer extends React.Component {
                 project={project}
                 elapsed={elapsed}
                 isRunning={isRunning}
+                onEditPress={this.handleEditPress}
             />
         );
     }

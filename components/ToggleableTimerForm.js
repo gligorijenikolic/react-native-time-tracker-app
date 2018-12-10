@@ -23,10 +23,10 @@ export default class ToggleableTimerForm extends React.Component {
 
     handleFormSubmit = timer => {
         const { onFormSubmit } = this.props;
-        
+
         onFormSubmit(timer);
         this.setState({ isOpen: false });
-    };        
+    };
 
     render() {
         const { isOpen } = this.state;
