@@ -8,32 +8,40 @@ export default class Timer extends React.Component {
         editFormOpen: false
     };
 
-    handleEditPress = () => {
-        this.openForm();
-    };
-
-    handleFormClose = () => {
-        this.closeForm();
-    };
-
-    handleSubmit = timer => {
-        const { onFormSubmit } = this.props;
-        onFormSubmit(timer);
-        this.closeForm();
-    };
-
     handleRemovePress  = () => {
         const { id, onRemovePress } = this.props;
         onRemovePress(id);
     };
 
-    closeForm = () => {
-        this.setState({ editFormOpen: false });
+    handleStartPress = () => {
+        const { id, onStartPress } = this.props;
+        onStartPress(id);
+    };
+    
+    handleStopPress = () => {
+        const { id, onStopPress } = this.props;
+        onStopPress(id);
     };
 
-    openForm = () => {
-        this.setState({ editFormOpen: true });
-    };
+    renderActionButton() {
+        const { isRunning } = this.props;
+        if (isRunning) {
+            return (
+                <TimerButton
+                    color="#DB2828"
+                    title="Stop"
+                    onPress={this.handleStopPress}
+                />
+            );
+        }
+        return (
+            <TimerButton
+                color="#21BA45"
+                title="Start"
+                onPress={this.handleStartPress}
+            />
+        );
+    } 
 
     render() {
         const { elapsed, title, project, onEditPress } = this.props;
@@ -48,7 +56,7 @@ export default class Timer extends React.Component {
                     <TimerButton color="blue" small title="Edit" onPress={onEditPress} />
                     <TimerButton color="blue" small title="Remove" onPress={this.handleRemovePress} />
                 </View>
-                <TimerButton color="#21BA45" title="Start" />
+                {this.renderActionButton()}
             </View>
         );
     }

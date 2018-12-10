@@ -28,11 +28,11 @@ export default class TimerForm extends React.Component {
     handleSubmit = () => {
         const { onFormSubmit, id } = this.props;
         const { title, project } = this.state;
-        
+
         onFormSubmit({
             id,
             title,
-            project,
+            project
         });
     };
     
