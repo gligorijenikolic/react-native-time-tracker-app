@@ -4,9 +4,10 @@ import uuidv4 from 'uuid/v4';
 
 import EditableTimer from './components/EditableTimer';
 import ToggleableTimerForm from './components/ToggleableTimerForm';
+import { newTimer } from './utils/TimerUtils';
 
 export default class App extends React.Component {
-  
+
 //   State is managed in some select parent components
 // and then that data flows down through children as props.
 // If state is updated, the component managing that state re-renders by calling render(). This, in turn,
@@ -32,6 +33,16 @@ export default class App extends React.Component {
     ]
   };
 
+//   we use JavaScript’s spread syntax to add the rest of our
+// existing timers to this new array. We do this to avoid mutating state.
+
+  handleCreateFormSubmit = timer => {
+    const { timers } = this.state;
+    this.setState({
+    timers: [newTimer(timer), ...timers],
+    });
+  };    
+
   render() {
     const { timers } = this.state;
 
@@ -50,7 +61,7 @@ export default class App extends React.Component {
           <Text style={styles.title}>Timers</Text>
         </View>
         <ScrollView style={styles.timerList}>
-          <ToggleableTimerForm />
+          <ToggleableTimerForm onFormSubmit={this.handleCreateFormSubmit} />
           {timers.map(({ title, project, id, elapsed, isRunning }) => (
             <EditableTimer
               key={id}
